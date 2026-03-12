@@ -9,14 +9,14 @@ This project focuses on solving a very common problem faced while filling govern
 
 ## ✨ Features
 
-* 📤 Upload image directly from your device
-* 🧾 Select the **government exam**
-* 🖼 Select **image type** (Photo / Signature / Thumb impression)
-* ⚡ Automatic resizing to **exact required dimensions**
-* 📦 File size compression to match exam limits
-* 👀 Live preview of resized image
-* ⬇️ Instant download
-* 🔧 Modular configuration to add new exams without changing resizing logic
+- 📤 Upload image directly from your device
+- 🧾 Select the **government exam**
+- 🖼 Select **image type** (Photo / Signature / Thumb impression)
+- ⚡ Automatic resizing to **exact required dimensions**
+- 📦 File size compression to match exam limits
+- 👀 Live preview of resized image
+- ⬇️ Instant download
+- 🔧 Modular configuration to add new exams without changing resizing logic
 
 ---
 
@@ -24,9 +24,9 @@ This project focuses on solving a very common problem faced while filling govern
 
 Each exam has different requirements like:
 
-* Photo width & height
-* File size limits
-* Image format
+- Photo width & height
+- File size limits
+- Image format
 
 Instead of hardcoding logic for each exam, this project uses a **configuration-based approach**.
 
@@ -37,25 +37,25 @@ Example:
 ```ts
 export const exams = {
   SSC_CGL: {
-    name: "SSC CGL",
+    name: 'SSC CGL',
     images: {
       photo: {
         width: 200,
         height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
-        format: "jpeg"
+        format: 'jpeg',
       },
       signature: {
         width: 140,
         height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
-        format: "jpeg"
-      }
-    }
-  }
-}
+        format: 'jpeg',
+      },
+    },
+  },
+};
 ```
 
 No resizing logic needs to be rewritten.
@@ -64,38 +64,43 @@ No resizing logic needs to be rewritten.
 
 ## 🏗 Tech Stack
 
-* **Vite** — frontend build tool
-* **React** — UI framework
-* **TypeScript** — type safety
-* **Tailwind CSS** — styling
-* **shadcn/ui** — UI components
-* **Sharp / Canvas utilities** — image processing
+- **Vite** — frontend build tool
+- **React** — UI framework
+- **TypeScript** — type safety
+- **Tailwind CSS** — styling
+- **shadcn/ui** — UI components
+- **Canvas API** — browser-native image processing (resize, crop, compress)
 
 ---
 
 ## 📁 Project Structure
 
-```json
+```
 src
  ├── components
  │   ├── UploadBox.tsx
  │   ├── ExamSelector.tsx
  │   ├── ImageTypeSelector.tsx
- │   ├── ImagePreview.tsx
- │   └── DownloadButton.tsx
+ │   ├── PreviewPanel.tsx
+ │   └── NavLink.tsx
  │
  ├── config
  │   └── exams.ts
  │
  ├── lib
  │   ├── imageProcessor.ts
- │   └── compression.ts
+ │   └── utils.ts
+ │
+ ├── hooks
+ │   ├── use-toast.ts
+ │   └── use-mobile.tsx
  │
  ├── types
  │   └── exam.ts
  │
  ├── pages
- │   └── Home.tsx
+ │   ├── Index.tsx
+ │   └── NotFound.tsx
  │
  └── main.tsx
 ```
@@ -107,8 +112,8 @@ src
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/exam-image-resizer.git
-cd exam-image-resizer
+git clone https://github.com/your-username/exam-resizer.git
+cd exam-resizer
 ```
 
 Install dependencies:
@@ -161,10 +166,10 @@ The UI and resizing logic will automatically support the new exam.
 
 This project can be easily deployed on:
 
-* **Vercel**
-* **Netlify**
-* **Cloudflare Pages**
-* **GitHub Pages**
+- **Vercel**
+- **Netlify**
+- **Cloudflare Pages**
+- **GitHub Pages**
 
 Build the project:
 
@@ -182,19 +187,19 @@ npm run preview
 
 ## 🔒 Privacy
 
-* Images are processed locally in the browser.
-* No images are stored permanently.
-* No uploads are saved on the server.
+- Images are processed locally in the browser.
+- No images are stored permanently.
+- No uploads are saved on the server.
 
 ---
 
 ## 🛠 Future Improvements
 
-* Bulk image resize for cyber cafés
-* Automatic exam requirement detection
-* Drag-and-drop cropping tool
-* Chrome extension for form filling
-* AI-based compression optimization
+- Bulk image resize for cyber cafés
+- Automatic exam requirement detection
+- Drag-and-drop cropping tool
+- Chrome extension for form filling
+- AI-based compression optimization
 
 ---
 
