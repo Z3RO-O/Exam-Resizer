@@ -152,12 +152,16 @@ const Index = () => {
                   {requirement && (
                     <div className='flex flex-wrap gap-3 text-sm text-muted-foreground tabular-nums'>
                       <span>
-                        {requirement.width} × {requirement.height} px
+                        {requirement.width && requirement.height
+                          ? `${requirement.width} × ${requirement.height} px`
+                          : 'Original Dimensions'}
                       </span>
                       <span>
                         {requirement.minSizeKB}–{requirement.maxSizeKB} KB
                       </span>
-                      <span className='uppercase'>{requirement.format}</span>
+                      <span className='uppercase'>
+                        {requirement.format ?? 'jpeg'}
+                      </span>
                     </div>
                   )}
 

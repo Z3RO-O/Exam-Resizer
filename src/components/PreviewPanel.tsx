@@ -58,7 +58,7 @@ const PreviewPanel = ({
               {result.width} × {result.height} px
             </span>
             <span>{result.sizeKB.toFixed(1)} KB</span>
-            <span className='uppercase'>{requirement.format}</span>
+            <span className='uppercase'>{requirement.format ?? 'jpeg'}</span>
           </div>
         )}
       </div>

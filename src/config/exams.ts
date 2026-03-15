@@ -1,199 +1,323 @@
 import type { ExamConfig } from '@/types/exam';
 
 export const exams: Record<string, ExamConfig> = {
+  /* SSC */
+
   SSC_CGL: {
     name: 'SSC CGL',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
         format: 'jpeg',
       },
     },
   },
+
   SSC_CHSL: {
     name: 'SSC CHSL',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
         format: 'jpeg',
       },
     },
   },
-  UPSC: {
+
+  SSC_MTS: {
+    name: 'SSC MTS',
+    images: {
+      photo: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
+        maxSizeKB: 20,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  SSC_GD: {
+    name: 'SSC GD Constable',
+    images: {
+      photo: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
+        maxSizeKB: 20,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* UPSC */
+
+  UPSC_CSE: {
     name: 'UPSC Civil Services',
     images: {
       photo: {
-        width: 300,
-        height: 300,
         minSizeKB: 20,
+        maxSizeKB: 300,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
         maxSizeKB: 100,
         format: 'jpeg',
       },
-      signature: {
-        width: 300,
-        height: 80,
-        minSizeKB: 10,
-        maxSizeKB: 40,
-        format: 'jpeg',
-      },
     },
   },
-  RAILWAY_NTPC: {
-    name: 'Railway NTPC',
+
+  NDA: {
+    name: 'UPSC NDA',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
-        maxSizeKB: 50,
+        maxSizeKB: 300,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
-        maxSizeKB: 20,
+        maxSizeKB: 100,
         format: 'jpeg',
       },
     },
   },
+
+  CDS: {
+    name: 'UPSC CDS',
+    images: {
+      photo: {
+        minSizeKB: 20,
+        maxSizeKB: 300,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
+        maxSizeKB: 100,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* BANKING */
+
   IBPS_PO: {
-    name: 'IBPS PO',
+    name: 'IBPS Probationary Officer',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
-        minSizeKB: 10,
-        maxSizeKB: 20,
-        format: 'jpeg',
-      },
-    },
-  },
-  IBPS_CLERK: {
-    name: 'IBPS Clerk',
-    images: {
-      photo: {
-        width: 200,
-        height: 230,
-        minSizeKB: 20,
-        maxSizeKB: 50,
-        format: 'jpeg',
-      },
-      signature: {
-        width: 140,
-        height: 60,
-        minSizeKB: 10,
-        maxSizeKB: 20,
-        format: 'jpeg',
-      },
-    },
-  },
-  SBI_PO: {
-    name: 'SBI PO',
-    images: {
-      photo: {
-        width: 200,
-        height: 230,
-        minSizeKB: 20,
-        maxSizeKB: 50,
-        format: 'jpeg',
-      },
-      signature: {
-        width: 140,
-        height: 60,
-        minSizeKB: 10,
-        maxSizeKB: 20,
-        format: 'jpeg',
-      },
-    },
-  },
-  STATE_POLICE: {
-    name: 'State Police Recruitment',
-    images: {
-      photo: {
-        width: 200,
-        height: 230,
-        minSizeKB: 20,
-        maxSizeKB: 50,
-        format: 'jpeg',
-      },
-      signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
         format: 'jpeg',
       },
       thumb: {
-        width: 150,
-        height: 150,
-        minSizeKB: 10,
+        minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
     },
   },
-  NDA: {
-    name: 'NDA (National Defence Academy)',
+
+  IBPS_CLERK: {
+    name: 'IBPS Clerk',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
+        format: 'jpeg',
+      },
+      thumb: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
         format: 'jpeg',
       },
     },
   },
-  CDS: {
-    name: 'CDS (Combined Defence Services)',
+
+  SBI_PO: {
+    name: 'SBI Probationary Officer',
     images: {
       photo: {
-        width: 200,
-        height: 230,
         minSizeKB: 20,
         maxSizeKB: 50,
         format: 'jpeg',
       },
       signature: {
-        width: 140,
-        height: 60,
         minSizeKB: 10,
         maxSizeKB: 20,
+        format: 'jpeg',
+      },
+      thumb: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  SBI_CLERK: {
+    name: 'SBI Clerk',
+    images: {
+      photo: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
+        maxSizeKB: 20,
+        format: 'jpeg',
+      },
+      thumb: {
+        minSizeKB: 20,
+        maxSizeKB: 50,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* RAILWAYS */
+
+  RAILWAY_NTPC: {
+    name: 'Railway NTPC',
+    images: {
+      photo: {
+        minSizeKB: 30,
+        maxSizeKB: 70,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 30,
+        maxSizeKB: 70,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  RAILWAY_GROUP_D: {
+    name: 'Railway Group D',
+    images: {
+      photo: {
+        minSizeKB: 30,
+        maxSizeKB: 70,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 30,
+        maxSizeKB: 70,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* ENGINEERING */
+
+  JEE_MAIN: {
+    name: 'JEE Main',
+    images: {
+      photo: {
+        minSizeKB: 10,
+        maxSizeKB: 200,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 4,
+        maxSizeKB: 30,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  GATE: {
+    name: 'GATE',
+    images: {
+      photo: {
+        minSizeKB: 20,
+        maxSizeKB: 200,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 10,
+        maxSizeKB: 100,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* MEDICAL */
+
+  NEET: {
+    name: 'NEET UG',
+    images: {
+      photo: {
+        minSizeKB: 10,
+        maxSizeKB: 200,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 4,
+        maxSizeKB: 30,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  /* TEACHING */
+
+  CTET: {
+    name: 'Central Teacher Eligibility Test',
+    images: {
+      photo: {
+        minSizeKB: 10,
+        maxSizeKB: 100,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 4,
+        maxSizeKB: 30,
+        format: 'jpeg',
+      },
+    },
+  },
+
+  UGC_NET: {
+    name: 'UGC NET',
+    images: {
+      photo: {
+        minSizeKB: 10,
+        maxSizeKB: 200,
+        format: 'jpeg',
+      },
+      signature: {
+        minSizeKB: 4,
+        maxSizeKB: 30,
         format: 'jpeg',
       },
     },

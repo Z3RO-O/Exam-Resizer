@@ -1,9 +1,9 @@
 export interface ImageRequirement {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   minSizeKB: number;
   maxSizeKB: number;
-  format: 'jpeg' | 'png';
+  format?: 'jpeg' | 'png';
 }
 
 export interface ExamConfig {

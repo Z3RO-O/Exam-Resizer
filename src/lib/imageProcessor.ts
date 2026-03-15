@@ -17,44 +17,45 @@ export async function resizeImage(
   let sourceW = img.width;
   let sourceH = img.height;
 
-  // Step-down scaling to prevent jagged edges if scaling down significantly
-  while (
-    sourceW / 2 >= requirement.width &&
-    sourceH / 2 >= requirement.height
-  ) {
-    const tempCanvas = document.createElement('canvas');
-    const newW = Math.floor(sourceW / 2);
-    const newH = Math.floor(sourceH / 2);
-    tempCanvas.width = newW;
-    tempCanvas.height = newH;
+  const shouldResize = !!(requirement.width && requirement.height);
+  const targetWidth = requirement.width ?? sourceW;
+  const targetHeight = requirement.height ?? sourceH;
 
-    const tCtx = tempCanvas.getContext('2d')!;
-    tCtx.imageSmoothingEnabled = true;
-    tCtx.imageSmoothingQuality = 'high';
-    tCtx.drawImage(sourceImg, 0, 0, newW, newH);
+  if (shouldResize) {
+    // Step-down scaling to prevent jagged edges if scaling down significantly
+    while (sourceW / 2 >= targetWidth && sourceH / 2 >= targetHeight) {
+      const tempCanvas = document.createElement('canvas');
+      const newW = Math.floor(sourceW / 2);
+      const newH = Math.floor(sourceH / 2);
+      tempCanvas.width = newW;
+      tempCanvas.height = newH;
 
-    sourceImg = tempCanvas;
-    sourceW = newW;
-    sourceH = newH;
+      const tCtx = tempCanvas.getContext('2d')!;
+      tCtx.imageSmoothingEnabled = true;
+      tCtx.imageSmoothingQuality = 'high';
+      tCtx.drawImage(sourceImg, 0, 0, newW, newH);
+
+      sourceImg = tempCanvas;
+      sourceW = newW;
+      sourceH = newH;
+    }
   }
 
   const canvas = document.createElement('canvas');
-  canvas.width = requirement.width;
-  canvas.height = requirement.height;
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
 
   const ctx = canvas.getContext('2d')!;
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
 
-  // Cover crop: scale to fill, then center-crop
-  const scale = Math.max(
-    requirement.width / sourceW,
-    requirement.height / sourceH
-  );
+  // If resizing, use cover crop. If not, draw original.
+  // Actually the cover crop logic works for both if targetWidth/Height = sourceW/H
+  const scale = Math.max(targetWidth / sourceW, targetHeight / sourceH);
   const scaledW = sourceW * scale;
   const scaledH = sourceH * scale;
-  const offsetX = (requirement.width - scaledW) / 2;
-  const offsetY = (requirement.height - scaledH) / 2;
+  const offsetX = (targetWidth - scaledW) / 2;
+  const offsetY = (targetHeight - scaledH) / 2;
 
   const mimeType = requirement.format === 'png' ? 'image/png' : 'image/jpeg';
 
@@ -79,8 +80,8 @@ export async function resizeImage(
 
   return {
     blob,
-    width: requirement.width,
-    height: requirement.height,
+    width: targetWidth,
+    height: targetHeight,
     sizeKB,
     dataUrl,
   };
@@ -117,32 +118,32 @@ async function compressToTargetSize(
   mimeType: string,
   maxSizeKB: number
 ): Promise<Blob> {
-  let smallestBlob: Blob | null = null;
+  let low = 0.05;
+  let high = 1.0;
+  let bestBlob: Blob | null = null;
 
-  // Step-down quality scan to find the actual maximum quality that fits
-  for (let q = 1.0; q >= 0.05; q -= 0.05) {
-    const quality = Math.round(q * 100) / 100;
-    const blob = await canvasToBlob(canvas, mimeType, quality);
+  // Binary search for the highest quality that fits within maxSizeKB
+  // Target a size that is 95% of the maxSizeKB to be safe but high quality
+  const targetSize = maxSizeKB * 0.98;
+
+  for (let i = 0; i < 8; i++) {
+    const mid = (low + high) / 2;
+    const blob = await canvasToBlob(canvas, mimeType, mid);
     const sizeKB = blob.size / 1024;
 
-    if (!smallestBlob || blob.size < smallestBlob.size) {
-      smallestBlob = blob; // Track smallest in case we NEVER meet the requirement
-    }
-
     if (sizeKB <= maxSizeKB) {
-      // We found a rough fit! Refine it for the absolute maximum quality.
-      let bestFit = blob;
-      for (let refineQ = quality + 0.04; refineQ > quality; refineQ -= 0.01) {
-        const rQuality = Math.round(refineQ * 100) / 100;
-        const rBlob = await canvasToBlob(canvas, mimeType, rQuality);
-        if (rBlob.size / 1024 <= maxSizeKB) {
-          return rBlob;
-        }
-      }
-      return bestFit;
+      bestBlob = blob;
+      low = mid; // Try higher quality
+      // If we are already very close to the target size, we can stop early
+      if (sizeKB >= targetSize) break;
+    } else {
+      high = mid; // Need lower quality
     }
   }
 
-  // If we couldn't meet the target size even at the lowest quality, return the smallest we got
-  return smallestBlob!;
+  if (bestBlob) return bestBlob;
+
+  // Final fallback: even at 0.05 it might be too large if the canvas is huge,
+  // but for fixed exam dimensions this is unlikely.
+  return await canvasToBlob(canvas, mimeType, 0.05);
 }
