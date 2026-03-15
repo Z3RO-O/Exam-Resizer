@@ -2,19 +2,19 @@ import { useState, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Download, RotateCcw } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Loader2, Download, RotateCcw, Heart, Github } from 'lucide-react';
+import { toast } from 'sonner';
 import { exams } from '@/config/exams';
 import { resizeImage, type ResizeResult } from '@/lib/imageProcessor';
 import UploadBox from '@/components/UploadBox';
 import ExamSelector from '@/components/ExamSelector';
 import ImageTypeSelector from '@/components/ImageTypeSelector';
 import PreviewPanel from '@/components/PreviewPanel';
+import { Badge } from '@/components/ui/badge';
 
 const examList = Object.keys(exams);
 
 const Index = () => {
-  const { toast } = useToast();
   const [file, setFile] = useState<File | null>(null);
   const [originalUrl, setOriginalUrl] = useState<string>('');
   const [examId, setExamId] = useState('');
@@ -50,15 +50,12 @@ const Index = () => {
     try {
       const res = await resizeImage(file, requirement);
       setResult(res);
-      toast({
-        title: 'Image resized successfully',
+      toast.success('Image resized successfully', {
         description: `${res.width}×${res.height} px • ${res.sizeKB.toFixed(1)} KB`,
       });
     } catch {
-      toast({
-        title: 'Resize failed',
+      toast.error('Resize failed', {
         description: 'Please try a different image.',
-        variant: 'destructive',
       });
     } finally {
       setProcessing(false);
@@ -94,8 +91,8 @@ const Index = () => {
       </header>
 
       {/* Main */}
-      <main className='flex-1 px-4 py-8'>
-        <div className='max-w-5xl mx-auto flex flex-col gap-8'>
+      <main className='flex-1 px-4 py-8 flex flex-col'>
+        <div className='max-w-5xl mx-auto flex-1 flex flex-col gap-8 w-full'>
           {/* Hero - only when no file */}
           <AnimatePresence>
             {!file && (
@@ -115,23 +112,18 @@ const Index = () => {
                 </p>
                 <div className='flex flex-wrap justify-center gap-2 pt-2'>
                   {examList.slice(0, 5).map(id => (
-                    <span
-                      key={id}
-                      className='text-xs px-2.5 py-1 rounded-full bg-muted text-muted-foreground font-medium'
-                    >
+                    <Badge key={id} variant='secondary'>
                       {exams[id].name}
-                    </span>
+                    </Badge>
                   ))}
-                  <span className='text-xs px-2.5 py-1 rounded-full bg-muted text-muted-foreground font-medium'>
-                    +{examList.length - 5} more
-                  </span>
+                  <Badge variant='secondary'>+{examList.length - 5} more</Badge>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
           {/* Main Card */}
-          <Card className='rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,.05),0_1px_2px_0_rgba(0,0,0,.05)] p-6 space-y-6'>
+          <Card className='rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,.05),0_1px_2px_0_rgba(0,0,0,.05)] p-6 flex-1 flex flex-col'>
             <AnimatePresence mode='wait'>
               {!file ? (
                 <UploadBox key='upload' onFileSelect={handleFileSelect} />
@@ -142,7 +134,7 @@ const Index = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-                  className='space-y-6'
+                  className='flex-1 flex flex-col gap-6'
                 >
                   {/* Selectors */}
                   <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
@@ -213,14 +205,26 @@ const Index = () => {
               )}
             </AnimatePresence>
           </Card>
-
-          {/* Privacy notice */}
-          <p className='text-xs text-center text-muted-foreground'>
-            Your images are processed in your browser and never stored on our
-            servers.
-          </p>
         </div>
       </main>
+      <footer className='flex flex-col items-center justify-center p-3 gap-2 border-t'>
+        <p className='text-sm font-medium text-center text-muted-foreground flex items-center gap-1.5'>
+          Made with <Heart className='w-4 h-4 fill-red-500 text-red-500' /> by{' '}
+          <a
+            href='https://github.com/Z3RO-O/Exam-Resizer'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center text-foreground text-center gap-1'
+          >
+            <span>Z3RO-O</span>
+            <Github className='w-4 h-4' />
+          </a>
+        </p>
+        <p className='text-xs text-center text-muted-foreground/80 font-semibold'>
+          Your images are processed in your browser and never stored on our
+          servers.
+        </p>
+      </footer>
     </div>
   );
 };

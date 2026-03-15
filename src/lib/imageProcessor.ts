@@ -18,18 +18,21 @@ export async function resizeImage(
   let sourceH = img.height;
 
   // Step-down scaling to prevent jagged edges if scaling down significantly
-  while (sourceW / 2 >= requirement.width && sourceH / 2 >= requirement.height) {
+  while (
+    sourceW / 2 >= requirement.width &&
+    sourceH / 2 >= requirement.height
+  ) {
     const tempCanvas = document.createElement('canvas');
     const newW = Math.floor(sourceW / 2);
     const newH = Math.floor(sourceH / 2);
     tempCanvas.width = newW;
     tempCanvas.height = newH;
-    
+
     const tCtx = tempCanvas.getContext('2d')!;
     tCtx.imageSmoothingEnabled = true;
     tCtx.imageSmoothingQuality = 'high';
     tCtx.drawImage(sourceImg, 0, 0, newW, newH);
-    
+
     sourceImg = tempCanvas;
     sourceW = newW;
     sourceH = newH;
@@ -125,7 +128,7 @@ async function compressToTargetSize(
     if (!smallestBlob || blob.size < smallestBlob.size) {
       smallestBlob = blob; // Track smallest in case we NEVER meet the requirement
     }
-    
+
     if (sizeKB <= maxSizeKB) {
       // We found a rough fit! Refine it for the absolute maximum quality.
       let bestFit = blob;
@@ -133,7 +136,7 @@ async function compressToTargetSize(
         const rQuality = Math.round(refineQ * 100) / 100;
         const rBlob = await canvasToBlob(canvas, mimeType, rQuality);
         if (rBlob.size / 1024 <= maxSizeKB) {
-          return rBlob; 
+          return rBlob;
         }
       }
       return bestFit;

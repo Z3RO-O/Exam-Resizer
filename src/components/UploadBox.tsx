@@ -35,7 +35,7 @@ const UploadBox = ({ onFileSelect }: UploadBoxProps) => {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className='w-full'
+      className='w-full flex-1 flex flex-col'
     >
       <div
         onDragOver={e => {
@@ -46,7 +46,7 @@ const UploadBox = ({ onFileSelect }: UploadBoxProps) => {
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
         className={`
-          flex flex-col items-center justify-center gap-3 p-10 rounded-xl cursor-pointer
+          flex-1 flex flex-col items-center justify-center gap-3 p-12 rounded-xl cursor-pointer
           border-2 border-dashed transition-colors duration-150
           ${isDragging ? 'border-primary bg-primary/5' : 'border-muted-foreground/25 hover:border-primary/50'}
         `}
