@@ -11,10 +11,11 @@ import ExamSelector from '@/components/ExamSelector';
 import ImageTypeSelector from '@/components/ImageTypeSelector';
 import PreviewPanel from '@/components/PreviewPanel';
 import { Badge } from '@/components/ui/badge';
+import { Header } from '@/components/Header';
 
 const examList = Object.keys(exams);
 
-const Index = () => {
+const Resizer = () => {
   const [file, setFile] = useState<File | null>(null);
   const [originalUrl, setOriginalUrl] = useState<string>('');
   const [examId, setExamId] = useState('');
@@ -80,15 +81,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className='min-h-screen flex flex-col'>
-      {/* Header */}
-      <header className='border-b py-4 px-4'>
-        <div className='max-w-5xl mx-auto'>
-          <h1 className='text-lg font-semibold tracking-tight text-foreground'>
-            Exam Image Resizer
-          </h1>
-        </div>
-      </header>
+    <div className='min-h-screen flex flex-col bg-background'>
+      <Header />
 
       {/* Main */}
       <main className='flex-1 px-4 py-8 flex flex-col'>
@@ -233,4 +227,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Resizer;

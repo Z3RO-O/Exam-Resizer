@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
-import Index from '@/pages/Index.tsx';
+import Landing from '@/pages/Landing.tsx';
+import Resizer from '@/pages/Resizer.tsx';
 import NotFound from '@/pages/NotFound.tsx';
 
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<Index />} />
+      <Route path='/' element={<Landing />} />
+      <Route path='/resize' element={<Resizer />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path='*' element={<NotFound />} />
     </Routes>
