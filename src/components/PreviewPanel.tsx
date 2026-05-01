@@ -52,15 +52,6 @@ const PreviewPanel = ({
             </p>
           )}
         </div>
-        {result && requirement && (
-          <div className='flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground tabular-nums'>
-            <span>
-              {result.width} × {result.height} px
-            </span>
-            <span>{result.sizeKB.toFixed(1)} KB</span>
-            <span className='uppercase'>{requirement.format ?? 'jpeg'}</span>
-          </div>
-        )}
       </div>
     </div>
   );

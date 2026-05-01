@@ -116,8 +116,8 @@ const Resizer = () => {
             )}
           </AnimatePresence>
 
-          {/* Main Card */}
-          <Card className='rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,.05),0_1px_2px_0_rgba(0,0,0,.05)] p-6 flex-1 flex flex-col'>
+          {/* Main Area */}
+          <div className='flex-1 flex flex-col'>
             <AnimatePresence mode='wait'>
               {!file ? (
                 <UploadBox key='upload' onFileSelect={handleFileSelect} />
@@ -128,81 +128,69 @@ const Resizer = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-                  className='flex-1 flex flex-col gap-6'
+                  className='flex-1 flex flex-col'
                 >
-                  {/* Selectors */}
-                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                    <ExamSelector value={examId} onChange={handleExamChange} />
-                    {examId && (
-                      <ImageTypeSelector
-                        examId={examId}
-                        value={imageType}
-                        onChange={handleImageTypeChange}
+                  <Card className='rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,.05),0_1px_2px_0_rgba(0,0,0,.05)] p-6 flex-1 flex flex-col gap-6'>
+                    {/* Selectors */}
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                      <ExamSelector
+                        value={examId}
+                        onChange={handleExamChange}
                       />
-                    )}
-                  </div>
-
-                  {/* Requirements badge */}
-                  {requirement && (
-                    <div className='flex flex-wrap gap-3 text-sm text-muted-foreground tabular-nums'>
-                      <span>
-                        {requirement.width && requirement.height
-                          ? `${requirement.width} × ${requirement.height} px`
-                          : 'Original Dimensions'}
-                      </span>
-                      <span>
-                        {requirement.minSizeKB}–{requirement.maxSizeKB} KB
-                      </span>
-                      <span className='uppercase'>
-                        {requirement.format ?? 'jpeg'}
-                      </span>
+                      {examId && (
+                        <ImageTypeSelector
+                          examId={examId}
+                          value={imageType}
+                          onChange={handleImageTypeChange}
+                        />
+                      )}
                     </div>
-                  )}
 
-                  {/* Preview */}
-                  <PreviewPanel
-                    originalUrl={originalUrl}
-                    result={result}
-                    requirement={requirement}
-                  />
+                    {/* Preview */}
+                    <PreviewPanel
+                      originalUrl={originalUrl}
+                      result={result}
+                      requirement={requirement}
+                    />
 
-                  {/* Actions */}
-                  <div className='flex flex-wrap gap-3'>
-                    {!result ? (
-                      <Button
-                        onClick={handleResize}
-                        disabled={!canResize}
-                        className='h-12 px-6 rounded-lg font-semibold active:scale-[0.98] transition-transform'
-                      >
-                        {processing && (
-                          <Loader2 className='w-4 h-4 mr-2 animate-spin' />
-                        )}
-                        {processing ? 'Resizing...' : 'Resize & Download'}
-                      </Button>
-                    ) : (
-                      <>
+                    {/* Actions */}
+                    <div className='flex flex-wrap gap-3'>
+                      {!result ? (
                         <Button
-                          onClick={handleDownload}
+                          onClick={handleResize}
+                          disabled={!canResize}
                           className='h-12 px-6 rounded-lg font-semibold active:scale-[0.98] transition-transform'
                         >
-                          <Download className='w-4 h-4 mr-2' />
-                          Download
+                          {processing && (
+                            <Loader2 className='w-4 h-4 mr-2 animate-spin' />
+                          )}
+                          {processing ? 'Resizing...' : 'Resize & Download'}
                         </Button>
-                        <Button
-                          variant='outline'
-                          onClick={handleReset}
-                          className='h-12 px-6 rounded-lg font-semibold'
-                        >
-                          <RotateCcw className='w-4 h-4 mr-2' />
-                          Start Over
-                        </Button>
-                      </>
-                    )}
-                  </div>
+                      ) : (
+                        <>
+                          <Button
+                            onClick={handleDownload}
+                            className='h-12 px-6 rounded-lg font-semibold active:scale-[0.98] transition-transform'
+                          >
+                            <Download className='w-4 h-4 mr-2' />
+                            Download
+                          </Button>
+                          <Button
+                            variant='outline'
+                            onClick={handleReset}
+                            className='h-12 px-6 rounded-lg font-semibold'
+                          >
+                            <RotateCcw className='w-4 h-4 mr-2' />
+                            Start Over
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </Card>
                 </motion.div>
               )}
             </AnimatePresence>
-          </Card>
+          </div>
         </div>
       </main>
       <footer className='flex flex-col items-center justify-center p-3 gap-2 border-t'>
