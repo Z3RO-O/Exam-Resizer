@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Download, RotateCcw, Heart, Github } from 'lucide-react';
+import { Loader2, Download, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
 import { exams } from '@/config/exams';
 import { resizeImage, type ResizeResult } from '@/lib/imageProcessor';
@@ -12,6 +12,7 @@ import ImageTypeSelector from '@/components/ImageTypeSelector';
 import PreviewPanel from '@/components/PreviewPanel';
 import { Badge } from '@/components/ui/badge';
 import { Header } from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const examList = Object.keys(exams);
 
@@ -193,24 +194,7 @@ const Resizer = () => {
           </div>
         </div>
       </main>
-      <footer className='flex flex-col items-center justify-center p-3 gap-2 border-t'>
-        <p className='text-sm font-medium text-center text-muted-foreground flex items-center gap-1.5'>
-          Made with <Heart className='w-4 h-4 fill-red-500 text-red-500' /> by{' '}
-          <a
-            href='https://github.com/Z3RO-O/Exam-Resizer'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='flex items-center text-foreground text-center gap-1'
-          >
-            <span>Z3RO-O</span>
-            <Github className='w-4 h-4' />
-          </a>
-        </p>
-        <p className='text-xs text-center text-muted-foreground/80 font-semibold'>
-          Your images are processed in your browser and never stored on our
-          servers.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 };
